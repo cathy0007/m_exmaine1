@@ -10,6 +10,6 @@ export default {
     return Http.post('/sendcode', data)
   },
   logbymobile (data){
-    return Http.post('/logbymobile', data)
+    return Http.get('/logbymobile', data)
   }
 }

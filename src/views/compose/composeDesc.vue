@@ -16,7 +16,7 @@
                         <p class="desc">{{ desc.desc }}</p>
                         <p class="price">
                             <span class="nprice">{{ desc.price }}</span><span class="oldprice">{{ desc.oldprice}}</span>
-                            <span class="right">销量：239</span>
+                            <span class="right">销量：{{ desc.privice }}</span>
                         </p>
                     </div>
                 </div>
@@ -90,16 +90,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- 日历组件 -->
-        <vueHashCalendar format="YY/MM/DD" pickerType="date" @change="changeDate" />
-        <!-- <vueHashCalendar :visible.sync="showCalendar" 
-        format="YY/MM/DD" pickerType="date" 
-        @change="changeDate" /> -->
-        <!-- :isShowWeekView="true" 周视图显示- 可以直接写Boolean -->
-
         <footer class="footer-btn">
-        <div class="btn-left">￥998</div><div @click="goBuy" class="btn-right">预约购买</div>
+        <div class="btn-left">￥{{ desc.price }}</div><div @click="goBuy" class="btn-right">预约购买</div>
     </footer>
 
     </div>
@@ -152,7 +144,6 @@ export default {
         async getDesc (id) {
            const data =  await Http.getComposeDesc(id)
             this.desc = data.data
-            console.log(this.desc, 'tyuio')
         },
         async hotHospital() {
         const { code, data }  = await Http.hothospital()
@@ -162,8 +153,8 @@ export default {
         }
         },
         goBuy () {
-            const { compose_id, chain_id, items} = this.desc.data
-            localStorage.setItem('order_info',{ compose_id: compose_id, chain_id, items })
+            const { chain_id} = this.desc
+            sessionStorage.setItem('order_info',JSON.stringify({ compose_id:this.$route.query.id, chain_id }))
             this.$router.push({path: '/additem'})
         }
     }

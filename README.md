@@ -7,7 +7,9 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+1. npm run serve 启动本地项目服务器
+2. cd src/data 开启接口模拟服务器
+   运行 json-server --watch data.json -p 3009
 ```
 
 ### Compiles and minifies for production
@@ -18,12 +20,19 @@ npm run build
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+### 项目背景
+在线体检项目是从线上到线下，着力打造体检O2O平台；为用户提供以体检为起点的健康管理闭环。设计了我要预约（选机构、选套餐、填写预约信息、加项）、我的报告（查看报告综述、查报告，咨询医生）、我的预约；
+亮点：
+• 多家体检机构、多种体检套餐随心预约；
+• 主套餐基础上，自主增加体检项目；
+• 在线查阅体检报告；
+
 ### 前端页面适配方案vw+rem
 html: {font-size: 8.88888888888889vw;}
 计算规则： 基于设计稿1125px宽度开发； vw是把屏幕分成100列就是100vw，那么1vw就是11.25px，那么把根元素设置100px，100px对应的vw就是：100/11.25 = 8.88888888888889vw; 在页面编写css的时候就这样算：比如header的高度是88px对应的rem就是 88/100 = 0.88rem；小数点往前移动两位即可。
 
 ### 模拟数据
-运行 json-server --watch data.json -p 3009 
+运行 json-server --watch data.json -p 3009
 ### 项目开发梳理
 #### 一.需求分析
    1. 产品层面：
@@ -32,9 +41,9 @@ html: {font-size: 8.88888888888889vw;}
    2. UI层面：
        1.1 网站的通用皮肤（主色、辅助颜色）
        1.2 适配方案选择 （适配哪些终端，设计稿宽度确认[rem+vw]） 
-       1.3 界面icon选择，阿里字体图标查找(默认的扁平图标，或者ui给我们的svg上传)
+       1.3 界面icon选择，iconfont阿里字体图标查找(默认的扁平图标，或者ui给我们的svg上传)
    3. 技术栈的选择
-      vue2x + axios + es6 + less + iconfont
+      vue2x + axios + es6 + less + iconfont+moment
 
 #### 二.项目开发流程
    1. 创建vue项目 npm/cnpm/pnpm
@@ -45,7 +54,6 @@ html: {font-size: 8.88888888888889vw;}
    2. 目录分配 （公用目录[api/utils/less/images/font]、业务模块目录[views/*]）
    3. 去iconfont阿里字体库，选择项目图标icon加入到assets/font目录，并把iconsont.css改为iconfont.less
    4. 创建公用全局css：cssReset.less，common.less[适配方案rem+vw]，并在入口文件main.js 全局引入
-
    5. vscode 常用插件Vue VSCode Snippets -快速生成vue模板-支持vue2、vue3
    6. 页面布局的时候-蓝湖标注和ps配合布局
    7. 路由懒加载的方式（3）  
@@ -83,14 +91,3 @@ html: {font-size: 8.88888888888889vw;}
     1. 线上/生产环境 取消consolog.log [prosess.env.NODE_ENV /dev*->开发环境 / production->线上环境];主要是通过在入口文件给console.log = function() {} 来解决。
     2. sourceMap: false // vue.config.js // true的时候一般在开发环境调试代码用到；生产环境false，代码直接加密压缩。
     3. gzip压缩-需要后台配合 x.g
-
----待确定
-   #### 注意事项
-       手机拨打电话，邮件，发短信
-       默认也就是在我们html>head 中是开启的，根据具体需求我们不需要页面上每个电话都可以拨打，那么需要在head中设置： content="telephone=no,email=no" name="format-detection"
-       然后单个按钮或者图标或者电话/邮件等需要有相关功能的时候：用a标签href里面指定：
-       tel: 手机号
-       sms: 手机号
-       mailto: 邮箱
-       导航守卫 路由拦截 （配合路由meta权限属性和token 校验）
-       验证码注册[发生验证码-手机号入库]、登录，存储token

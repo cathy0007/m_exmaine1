@@ -18,8 +18,21 @@ const getComposeDesc = (params) => {
 const addPerson = (data) => {
     return Http.post('/addPerson', data)
 }
+const myOrderList = (data) => {
+    return Http.post('/myOrderList', data)
+}
+const getMyOrderList = (data) => {
+    return Http.get('/myOrderList', data)
+}
+const getOrderInfo = (params) => {
+    return Http.get('/orderInfo', params)
+}
+
 export default {
     hotCompose,
     composeList,
-    getComposeDesc
+    getComposeDesc,
+    myOrderList,
+    getMyOrderList,
+    getOrderInfo
 }

@@ -2,12 +2,11 @@
     <div class="compose">
         <MyHeader :title="'套餐列表'" :showBack="true" />
         <ul>
-            <!-- <li v-for="item in [1,2,3,4]" @click="$router.push({ name: 'composeList', params: { count: 6,name: 'xx'}})"> -->
-            <li v-for="item in [1,2,3,4]" @click="$router.push({ path: '/composeList', query: { count: 6,name: '体检套餐列表'}})">
+            <li v-for="(item, index) in composeCate" :key="index" @click="$router.push('/composeList')">
                 <img src="~assets/images/pic_01.jpg" class="pic" alt="">
                 <div class="info">
-                    <h3>标题</h3>
-                    <p>812个</p>
+                    <h3>{{ item.name }}</h3>
+                    <p>{{item.count}}个</p>
                 </div>
                 <span class="icon-desc">></span>
             </li>
@@ -26,7 +25,24 @@ export default {
     },
     data() {
         return {
-
+            composeCate: [
+            {
+                "name": "优雅绅士 男性套餐",
+                "count": 6
+            },
+            {
+                "name": "粉红挚爱 女性套餐",
+                "count": 8
+            },
+            {
+                "name": "关爱父母 老人套餐",
+                "count": 8
+            },
+            {
+                "name": "职场无忧 入职体检",
+                "count": 2
+            }
+            ]
         }
     },
     methods: {

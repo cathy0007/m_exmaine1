@@ -6,21 +6,22 @@ const Login = () => import('../views/login')
 const Compose = () => import('../views/compose/index')
 const ComposeList = () => import('../views/compose/composeList')
 const composeDesc = () => import('../views/compose/composeDesc')
-const Hospital = () => import('../views/hospital/hospitalList')
-const HospitalDesc = () => import('../views/hospital/hospitalDesc')
+const hospitalList = () => import('../views/hospital/hospitalList')
+const hospitalDesc = () => import('../views/hospital/hospitalDesc')
 const addItem = () => import('../views/addItem')
 const orderConfirm = () => import('../views/orderConfirm')
 const Subscribe = () => import('../views/subscribe')
 const subscribeInfo = () => import('../views/subscribe/subscribeInfo')
-const addPerson = () => import('../views/addPerson')
-const addPersonList = () => import('../views/addPersonList')
+const addPerson1 = () => import('../views/addPerson1')
+const personList = () => import('../views/addPersonList')
 const payConfirm = () => import('../views/payConfirm')
-
+const report = () => import('../views/report/index')
 
 const routes = [
   {
     path: '/',
     name: 'home',
+
     component: Home
   },
   {
@@ -47,24 +48,15 @@ const routes = [
     path: '/composeDesc',
     name: 'composeDesc',
     component: composeDesc,
-    meta: {
-      requiresAuth: true
-    }
   },
   {
-    path: '/hospital',
-    name: 'hospital',
-    component: Hospital,
-    meta: {
-      requiresAuth: true
-    }
+    path: '/hospitalList',
+    name: 'hospitalList',
+    component: hospitalList,
   },{
     path: '/hospitalDesc',
     name: 'hospitalDesc',
-    component: HospitalDesc,
-    meta: {
-      requiresAuth: true
-    }
+    component: hospitalDesc,
   },
   {
     path: '/addItem',
@@ -75,17 +67,17 @@ const routes = [
     }
   },
   {
-    path: '/addPerson',
-    name: 'addPerson',
-    component: addPerson,
+    path: '/addPerson1',
+    name: 'addPerson1',
+    component: addPerson1,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: '/addPersonList',
-    name: 'addPersonList',
-    component: addPersonList,
+    path: '/personList',
+    name: 'personList',
+    component: personList,
     meta: {
       requiresAuth: true
     }
@@ -129,9 +121,15 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/report',
+    name: 'report',
+    component: report,
+    meta: {
+      requiresAuth: true
+    }
   }
-  
-
 ]
 
 const router = new VueRouter({
@@ -139,7 +137,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  let token = sessionStorage.getItem('token') || ''
+  let token = sessionStorage.getItem('user') || ''
   if (to.meta.requiresAuth) {
     if (token) {
       next()

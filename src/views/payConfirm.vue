@@ -1,9 +1,10 @@
 <template>
-    <div class="pay-order">
-        <!-- header -->
-        <myHeader :title="'支付完成预约'" />
-        <div class="order-info">
-      <p>订单号：<span>{{ orderId }}</span></p>
+  <div class="pay-order">
+    <!-- header -->
+    <myHeader :title="'支付完成预约'" />
+    <div class="pd10">
+      <div class="order-info">
+      <p>订单号：<span>{{ order_no }}</span></p>
       <p>支付金额：<span class="amount">￥{{ amount }}</span></p>
     </div>
 
@@ -12,40 +13,55 @@
       <ul>
         <li v-for="(method, index) in paymentMethods" :key="index">
           <label class="radio-label">
-            <input
-              type="radio"
-              name="payment"
-              :value="method"
-              v-model="selectedMethod"
-            />
+            <input type="radio" name="payment" :value="method" v-model="selectedMethod" />
             <span class="label-text">{{ method }}</span>
           </label>
         </li>
       </ul>
     </div>
-
-    <button class="confirm-btn" @click="confirmPayment">确定</button>
     </div>
+
+    <div class="btn-box">
+      <button class="submit-btn" @click="confirmPayment">确定</button>
+    </div>
+  </div>
 </template>
 
 <script>
+import myHeader from 'common/header'
+import Http from '../api/index'
 export default {
-
-    data() {
-        return {
-          orderId: '2343422',
-          amount: 1397,
-          paymentMethods: ['支付宝', '微信支付', '网银支付'],
-          selectedMethod: '支付宝',
-        }
-    },
-    methods: {
-      confirmPayment() {
-        // 调用支付接口/ api/topay 参数：{orderid,userid}
-        // 支付成功跳转到我的预约页面
-        console.log('选择的支付方式是:', this.selectedMethod);
-        this.$route('/subscribe')
-      }
+  components: {
+    myHeader
+  },
+  data() {
+    return {
+      amount: 0,
+      order_no: '',
+      paymentMethods: ['支付宝', '微信支付', '网银支付'],
+      selectedMethod: '支付宝',
+    }
+  },
+  mounted() {
+    //获取接口getOrderList 拿到订单总金额
+    this.amount = 1397
+    this.order_no = 'IRYx0000000112'
+    // 
+  },
+  methods: {
+    async confirmPayment() {
+      // 调用支付接口/ api/topay 参数：{orderid,userid}
+      // 支付成功跳转到我的预约页面
+      console.log('选择的支付方式是:', this.selectedMethod);
+      // 获取订单数据
+      const params = JSON.parse(sessionStorage.getItem('orderList'))
+      // 支付成功 调取我的预约接口添加数据
+      // 模拟已体检的状态
+      params.order_status = '已体检'
+      await Http.myOrderList(params)
+      // 路由跳转到我的预约页面
+      this.$router.push('/subscribe')
+    }
   }
 
 }

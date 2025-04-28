@@ -4,9 +4,9 @@
     <myHeader :title="'我的预约'" />
     <div class="list pd-body">
 
-      <dl v-for="(item, index) in list" :key="index" @click="$router.push({path:'/subscribeInfo', params: item.state})">
+      <dl v-for="(item, index) in list" :key="index" @click="$router.push({path:'/subscribeInfo', query:{order_status:item.order_status}})">
         <dt class="border1px">
-          <span>{{ item.username }}</span>
+          <span>{{ item.username }}&nbsp;{{ item.mobile }}</span>
           <span class="state" 
           :class="[
             {wait: item.order_status === '待体检'}, 
@@ -20,7 +20,7 @@
         </dd>
         <dd>
           <span>体检时间：</span>
-          <span>{{ item.time }}</span>
+          <span>{{ item.addtime }}</span>
         </dd>
         <dd>
           <span>预约单号：</span>
@@ -32,106 +32,26 @@
 </template>
 
 <script>
+import Http from 'api/index'
 import myHeader from 'common/header'
 export default {
   data () {
     return {
-      list: [
-      {
-                "order_id": 1,
-                "order_no": "TJ000001", //预约单号
-                "user_id": 1,
-                "username": "zhansan",
-                "sex": 1,
-                "mobile": "13000000000",
-                "card": "37152519900872",
-                "items": "1",
-                "hospital_id": 1,
-                "chain_id": "1",
-                "time": "2021-06-18",//预约时间
-                "order_status": "待支付",
-                "total": "999",
-                "addtime": 1624018444,
-                "hospital_name": "慈铭体检",
-                "chain_name": "慈铭体检海淀分院"
-            },
-            {
-                "order_id": 2,
-                "order_no": "TJ000002",
-                "user_id": 1,
-                "username": "zhansan",
-                "sex": 1,
-                "mobile": "13000000000",
-                "card": "37152519900872",
-                "items": "1",
-                "hospital_id": 1,
-                "chain_id": "1",
-                "time": "2021-06-18",
-                "order_status": "已支付",
-                "total": "999",
-                "addtime": 1624018444,
-                "hospital_name": "慈铭体检",
-                "chain_name": "慈铭体检海淀分院"
-            },
-            {
-                "order_id": 3,
-                "order_no": "TJ000003",
-                "user_id": 1,
-                "username": "zhansan",
-                "sex": 1,
-                "mobile": "13000000000",
-                "card": "37152519900872",
-                "items": "1",
-                "hospital_id": 1,
-                "chain_id": "1",
-                "time": "2021-06-18",
-                "order_status": "已取消",
-                "total": "999",
-                "addtime": 1624018444,
-                "hospital_name": "慈铭体检",
-                "chain_name": "慈铭体检海淀分院"
-            },
-            {
-                "order_id": 4,
-                "order_no": "TJ000004",
-                "user_id": 1,
-                "username": "zhansan",
-                "sex": 1,
-                "mobile": "13000000000",
-                "card": "37152519900872",
-                "items": "1",
-                "hospital_id": 1,
-                "chain_id": "1",
-                "time": "2021-06-18",
-                "order_status": "已完成",
-                "total": "999",
-                "addtime": 1624018444,
-                "hospital_name": "慈铭体检",
-                "chain_name": "慈铭体检海淀分院"
-            },
-            {
-                "order_id": 5,
-                "order_no": "TJ000005",
-                "user_id": 1,
-                "username": "lisi",
-                "sex": 1,
-                "mobile": "13000000000",
-                "card": "37152519900872",
-                "items": "1",
-                "hospital_id": 1,
-                "chain_id": "1",
-                "time": "2021-06-18",
-                "order_status": "待支付",
-                "total": "999",
-                "addtime": 1624018444,
-                "hospital_name": "慈铭体检",
-                "chain_name": "慈铭体检海淀分院"
-            }
-      ]
+      list: []
     }
   },
   components: {
     myHeader
+  },
+  mounted() {
+    this.getList()
+  },
+  methods: {
+   async getList () {
+      const data = await Http.getMyOrderList()
+      this.list = data
+      console.log('list',this.list)
+    }
   }
 };
 </script>

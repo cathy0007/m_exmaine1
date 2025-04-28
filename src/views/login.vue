@@ -57,17 +57,23 @@ export default {
     async getCode() {
       if (this.checkValidate()) return
       this.counTimer()
+      // 发送验证码接口
       // await Http.sendCode({ mobile: this.mobile })
     },
     async goLogin() {
       if (this.checkValidate()) return
-      const { mobile, code1 } = this
-      if (code1 !== ' ') {
+      const { code1, mobile } = this
+      if (code1) {
         this.errorTip = ''
-        sessionStorage.setItem('token', '123456')
-        this.$router.push(!this.$route.query.redirect ? '/home' : this.$route.query.redirect)
+        const { code, data, token } = await Http.logbymobile({mobile, code: code1})
+        if (code === '00000') {
+          sessionStorage.setItem('user', JSON.stringify({userinfo:data}))
+          sessionStorage.setItem('token', token)
+          this.$router.push(!this.$route.query.redirect ? '/home' : this.$route.query.redirect)
+          // this.$router.push('/home')
+        }
       } else {
-        this.errorTip = 'error'
+        this.errorTip = '请输入验证码'
       }
 
     }

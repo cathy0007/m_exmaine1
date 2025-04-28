@@ -1,9 +1,9 @@
 <template>
-    <div class="list">  
-        <myHeader :title="$route.query.name" :option="true" :classArr="['icon-row', 'icon-col']" classStr="icon-row" @changeType="changeShow" />
+    <div class="list">
+        <myHeader :title="'套餐列表'" :option="true" :classArr="['icon-row', 'icon-col']" classStr="icon-row" @changeType="changeShow" />
         <ul class="item" ref="item">
           <li v-for="(item, index) in composeList" :key="index"
-          @click="$router.push({path: '/composeDesc', query: { id: index}})">
+          @click="goDesc(item.compose_id)">
             <img src="~assets/images/pic_01.jpg" :alt="item.compose_name" />
             <div class="info">
               <h3>{{item.compose_name}}</h3>
@@ -48,6 +48,9 @@
                     this.composeList = data.data
                 }
             },
+            goDesc (id) {
+                this.$router.push({path: '/composeDesc', query: { id}})
+            }
         }
         
     }
@@ -60,7 +63,7 @@
         li {
             width: 4.6rem;
             margin-top: .2rem;
-            padding: 0 .4rem;
+            padding: .4rem;
             background-color: #fff;
             border-radius: .08rem;
         }
@@ -71,18 +74,27 @@
             color:#fff;
             background-color: #38ad67;
             border:none;
-            width: 1.2rem;
             line-height: .48rem;
             border-radius: .01rem;
             font-size: .20rem;
         }
     }
+    .info {
+        h3 {
+            font-size: .32rem;
+        }
+    }
     .desc {
         color: #666;
-        font-size: 0.2rem;
+        font-size: 0.24rem;
     }
     .price {
         padding: .05rem;
+    }
+    .oldprice {
+        float: right;
+        text-decoration: line-through;
+        color: #666;
     }
     .col {
         display: block;

@@ -30,4 +30,7 @@ const get = (url, params) => {
 const post = (url, data) => {
   return axios.post(url, data)
 }
-export default { get, post }
+const del = (url, data) => {
+  return axios.delete(url, data)
+}
+export default { get, post,del }

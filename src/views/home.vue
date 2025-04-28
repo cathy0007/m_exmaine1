@@ -26,7 +26,7 @@
             <p>报告管理&nbsp;趋势分析</p>
           </div>
         </li>
-        <li @click="$router.push('/compose')">
+        <li @click="$router.push('/report')">
           <img src="~assets/images/home/nav_04.png" alt="报告解读" />
           <div class="info">
             <h3>报告解读</h3>
@@ -39,7 +39,7 @@
     <div class="item hospital">
       <div class="item-hd">
         <h2>推荐机构</h2>
-        <router-link to="/compose">
+        <router-link to="/hospitalList">
           <span>
             <i class="iconfont icon-menu"></i>
             更多
@@ -48,11 +48,11 @@
       </div>
       <div class="list">
         <ul>
-          <li v-for="(item, index) in hospitalList" :key="index">
+          <li v-for="(item, index) in hospitalList" :key="index" @click="$router.push('/hospitalDesc?id='+item.chain_id)">
             <div class="inner">
               <img src="~assets/images/pic_01.jpg" alt="" />
               <h3>{{item.hospital_name}}</h3>
-              <p>{{item.countcompose}}个体检套餐</p>
+              <p class="item-info">{{item.countcompose}}个体检套餐</p>
             </div>
             <span class="favorite" @click="favorite($event, item.chain_id)">
               <i class="iconfont icon-like"></i>
@@ -148,7 +148,9 @@ export default {
     border: 1px solid #f00;
   }
 }
-
+.item-info {
+  font-size: .32rem;
+}
 .home {
   padding-top: 1.32rem;
   background: url('~assets/images/home/bg.png') no-repeat left top;

@@ -43,10 +43,10 @@ export default {
 
         changeCol () {
             this.$emit('changeType', true)
-            if (this.option) {
-                this.classStr = this.classArr[1]
-            } else {
+            if (this.classArr.indexOf(this.classStr) === 1) {
                 this.classStr = this.classArr[0]
+            } else {
+                this.classStr = this.classArr[1]
             }
         }
 

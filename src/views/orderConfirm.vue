@@ -7,20 +7,18 @@
         <span>{{ item.name }}</span>
         <span>¥{{ item.price }}</span>
       </div>
+      <div class="total">
+        <span>合计</span>
+        <span class="total-price">¥{{ totalPrice }}</span>
+      </div>
     </div>
-
-    <div class="total">
-      <span>合计</span>
-      <span class="total-price">¥{{ totalPrice }}</span>
-    </div>
-
     <div class="info-list">
       <div class="info-item">
         <span>体检机构</span>
-        <select v-model="selectedAgency" class="select-box">
+        <select v-model="params.chain_name" class="select-box">
           <option disabled value="">请选择机构</option>
-          <option v-for="agency in agencies" :key="agency" :value="agency">
-            {{ agency }}
+          <option v-for="agency in agencies" :key="agency.chain_id" :value="agency.chain_id">
+            {{ agency.chain_name }}
           </option>
         </select>
       </div>
@@ -28,13 +26,13 @@
       <div class="info-item">
         <span>体检人</span>
         <span class="clickable" @click="goToPersonPage">
-          {{ selectedPerson || '未选择' }}
+          {{ params.username || '未选择' }}
         </span>
       </div>
 
       <div class="info-item">
         <span>体检日期</span>
-        <input type="date" v-model="selectedDate" class="date-input" />
+        <input type="date" v-model="params.addtime" class="date-input" />
       </div>
     </div>
 
@@ -46,9 +44,11 @@
 </template>
 
 <script>
-// 根据id查询详情接口获取数据
+import myHeader from 'common/header'
 export default {
-
+  components: {
+    myHeader
+  },
   data() {
     return {
       packageList: [
@@ -56,10 +56,54 @@ export default {
         { name: '脑部CT', price: 300 },
         { name: '心电图', price: 99 }
       ],
-      agencies: ['【慈铭】广州体育中心体检中心', '【慈铭】北京体检中心', '【慈铭】上海体检中心'],
-      selectedAgency: '',
-      selectedPerson: '',
-      selectedDate: ''
+      agencies: [{
+            "chain_id": 28,
+            "hospital_id": 5,
+            "chain_name": "北大医院海淀分支",
+            "chain_no": "JG20210605073704",
+            "is_use": 1,
+            "privice": 130000,
+            "city": 130200,
+            "disct": null,
+            "address": "学清路88号",
+            "thumb": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2530869004,2317526421&fm=26&gp=0.jpg",
+            "type": 1,
+            "attr": 1,
+            "tel": "0635-546601",
+            "coordinate": "1000,20000",
+            "addtime": 1622878624,
+            "is_hot": 0,
+            "hospital_name": "北大医院"
+        },
+        {
+            "chain_id": 27,
+            "hospital_id": 5,
+            "chain_name": "北大医院朝阳分支",
+            "chain_no": "JG20210605073307",
+            "is_use": 1,
+            "privice": 130000,
+            "city": 130200,
+            "disct": null,
+            "address": "青年路08号",
+            "thumb": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2530869004,2317526421&fm=26&gp=0.jpg",
+            "type": 1,
+            "attr": 1,
+            "tel": "0635-546601",
+            "coordinate": "1000,20000",
+            "addtime": 1622878387,
+            "is_hot": 0,
+            "hospital_name": "北大医院"
+        }],
+      params: {
+        order_no:'TJ'+(Math.floor(Math.random()+100 * 1000)),
+        chain_name: '',
+        username: '',
+        addtime: '',
+        // health_user_id: 0,
+        // compose_id:0,
+        user_id: 0,
+        order_status: '待体检'
+      }
     }
   },
   computed: {
@@ -67,17 +111,28 @@ export default {
       return this.packageList.reduce((sum, item) => sum + item.price, 0)
     }
   },
+  mounted(){
+    const user = JSON.parse(sessionStorage.getItem('user')).userinfo
+    const userinfo = JSON.parse(sessionStorage.getItem('user_order_info'))
+    const orderinfo = JSON.parse(sessionStorage.getItem('order_info'))
+    this.params.username = userinfo.username
+    this.params.health_user_id = userinfo.health_user_id
+    this.params.compose_id = orderinfo.compose_id
+    this.params.user_id = user.user_id
+  },
   methods: {
-    submitOrder() {
-      if (!this.selectedAgency || !this.selectedPerson || !this.selectedDate) {
+    async submitOrder() {
+      if (!this.params.chain_name || !this.params.username || !this.params.addtime) {
         alert('请完整填写体检机构、体检人和体检日期！');
         return;
       }
       //  提交接口携带参数：health_user_id,compose_id,user_id;得到orderid，跳转到订单详情页面
-      this.$router.push({ path: '/payConfirm' });
+      sessionStorage.setItem('orderList', JSON.stringify(this.params))
+      console.log('orderList', this.params)
+      this.$router.push('/payConfirm');
     },
     goToPersonPage() {
-      this.$router.push({ path: '/addPerson' });
+      this.$router.push('/personList')
     }
   }
 
@@ -85,29 +140,31 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.orderconfirm {
-  padding: 20px;
-  min-height: 100vh;
+
+.package-list,.package-item ,.info-item{
+  padding: .2rem;
+  border-bottom: .16rem solid #f5f5f5;
+  background-color: #fff;
 }
-.package-list {
-  border-bottom: 8px solid #f5f5f5;
+.select-box ,.date-input {
+  border:none;
 }
 
 .package-item {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
-  font-size: 16px;
+  padding: .24rem;
+  font-size: .32rem;
   color: #333;
 }
 
 .total {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
-  font-size: 18px;
+  padding: .24rem 0;
+  font-size: .36rem;
   color: #f60;
-  border-bottom: 8px solid #f5f5f5;
+  border-bottom: .16rem solid #f5f5f5;
   font-weight: bold;
 }
 
@@ -116,30 +173,32 @@ export default {
 }
 
 .info-list {
-  margin-top: 10px;
+  margin-top: .2rem;
 }
 
 .info-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
+  padding: .28rem 0;
   border-bottom: 1px solid #eee;
-  font-size: 16px;
+  font-size: .32rem;
   color: #666;
 }
 
-.select-box, .date-input {
+.select-box,
+.date-input {
   width: 60%;
-  padding: 6px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: .12rem;
+  font-size: .32rem;
+  border-radius: .08rem;
   color: #333;
 }
 
-.date-input {
-  height: 34px;
+.total,.info-item{
+  padding-left:.24rem;
+  padding-right:.24rem;
+
 }
 
 .clickable {
@@ -153,17 +212,17 @@ export default {
   left: 0;
   width: 100%;
   background: #fff;
-  padding: 10px 20px;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+  padding: .2rem .4rem;
+  box-shadow: 0 -.04rem .16rem rgba(0, 0, 0, 0.05);
 }
 
 .submit-btn {
   width: 100%;
-  padding: 12px;
+  padding: .24rem;
   background-color: #6dbb8b;
   color: #fff;
-  font-size: 18px;
+  font-size: .36rem;
   border: none;
-  border-radius: 6px;
+  border-radius: .12rem;
 }
 </style>

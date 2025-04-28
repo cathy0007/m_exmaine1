@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   publicPath: "./",
-  productionSourceMap: true,
+  productionSourceMap: false,
   transpileDependencies: true,
   configureWebpack: {
     externals: {
@@ -22,12 +22,10 @@ module.exports = defineConfig({
     }
   },
   devServer: {
-    // open: true,
     proxy: {
       '/api': {
         // target: 'http://47.121.191.229',
-        // target: 'http://192.168.1.80:3009',
-        target: 'http://172.20.10.4:3009',
+        target: 'http://192.168.1.80:3009',
 
         pathRewrite: {
           '^/api':' '
