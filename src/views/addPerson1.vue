@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       userinfo: {
-        "health_user_id":Math.floor(Math.random()+1 * 1000),
+        "health_user_id":Math.floor(Math.random() * 999),
         "username": " ",
         "mobile": "",
         "birthday": "",

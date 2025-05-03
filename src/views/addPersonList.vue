@@ -31,7 +31,7 @@ export default {
     return {
       user_id :'',
       personList: [],
-      selectedId: 0 // 默认选中小二
+      selectedId: -1 // 默认选中小二
     }
   },
   mounted(){

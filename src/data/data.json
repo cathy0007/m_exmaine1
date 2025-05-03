@@ -583,14 +583,14 @@
       "card": "22ww"
     },
     {
-      "id": "9b57",
-      "health_user_id": 1000,
-      "username": " test123",
-      "mobile": "13567777777",
-      "birthday": "2018-02-27",
+      "id": "0f1a",
+      "health_user_id": 291,
+      "username": " zhaolili",
+      "mobile": "15109888777",
+      "birthday": "2025-05-09",
       "sex": "女",
       "is_marry": "未婚",
-      "card": "41909877666661223"
+      "card": "41098333400086558"
     }
   ],
   "personList": {
@@ -786,6 +786,28 @@
       "order_status": "已体检",
       "health_user_id": 3,
       "compose_id": "11"
+    },
+    {
+      "id": "2ee0",
+      "order_no": "TJ100000",
+      "chain_name": 27,
+      "username": "lisi",
+      "addtime": "2025-05-08",
+      "user_id": 28,
+      "order_status": "已体检",
+      "health_user_id": 3,
+      "compose_id": "11"
+    },
+    {
+      "id": "2a9f",
+      "order_no": "TJ100000",
+      "chain_name": 27,
+      "username": " zhaolili",
+      "addtime": "2025-05-08",
+      "user_id": 28,
+      "order_status": "已体检",
+      "health_user_id": 291,
+      "compose_id": "10"
     }
   ],
   "orderInfo": {
@@ -813,5 +835,15 @@
         "price": 99
       }
     ]
+  },
+  "healthManagement": {
+    "scoreList": [
+      70,
+      80,
+      90,
+      85,
+      78
+    ],
+    "notice": "低血糖通常由饮食不当、剧烈运动、胰岛素或降糖药使用不当等引起，患者会出现头晕、出汗、心慌、乏力等症状；高血压则多与遗传、肥胖、摄盐过多、精神紧张、缺乏运动等因素有关，长期高血压会损害心脑肾等器官。医生建议，低血糖患者应规律饮食，避免空腹及剧烈运动，按时监测血糖并在出现低血糖征兆时及时补充糖分；而高血压患者需控制体重，限制钠盐摄入，坚持锻炼，保持心态平稳，并定期测量血压，如有需要应遵医嘱服用降压药物以预防并发症的发生。高血压多因遗传、肥胖、饮食高盐、缺乏运动等引起，医生建议控制饮食、适量锻炼、规律作息、监测血压并遵医嘱服药。"
   }
 }

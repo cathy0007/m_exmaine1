@@ -16,12 +16,14 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
   if (response.data.code != '00000') {
-    alert(response.data.msg)
+    // alert(response.data.msg)
+    console.log('response!=00000')
   }
   return response.data;
 }, function (error) {
   // 对响应错误做点什么
-  alert('请求有误，⽹络开⼩差')
+  // alert('请求有误，⽹络开⼩差')
+  console.log('response!=请求有误，⽹络开⼩差')
   return Promise.reject(error);
 });
 const get = (url, params) => {

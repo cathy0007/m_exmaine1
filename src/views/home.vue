@@ -26,11 +26,11 @@
             <p>报告管理&nbsp;趋势分析</p>
           </div>
         </li>
-        <li @click="$router.push('/report')">
+        <li @click="$router.push('/healthManagement')">
           <img src="~assets/images/home/nav_04.png" alt="报告解读" />
           <div class="info">
-            <h3>报告解读</h3>
-            <p>在线医生&nbsp;答疑解惑</p>
+            <h3>健康管理</h3>
+            <p>历史数据对比&nbsp;食谱推荐</p>
           </div>
         </li>
       </ul>
@@ -48,8 +48,8 @@
       </div>
       <div class="list">
         <ul>
-          <li v-for="(item, index) in hospitalList" :key="index" @click="$router.push('/hospitalDesc?id='+item.chain_id)">
-            <div class="inner">
+          <li v-for="(item, index) in hospitalList" :key="index">
+            <div class="inner" @click="$router.push('/hospitalDesc?id='+item.chain_id)">
               <img src="~assets/images/pic_01.jpg" alt="" />
               <h3>{{item.hospital_name}}</h3>
               <p class="item-info">{{item.countcompose}}个体检套餐</p>

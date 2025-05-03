@@ -27,12 +27,15 @@ const getMyOrderList = (data) => {
 const getOrderInfo = (params) => {
     return Http.get('/orderInfo', params)
 }
-
+const healthManagement = (params) => {
+    return Http.get('/healthManagement', params)
+}
 export default {
     hotCompose,
     composeList,
     getComposeDesc,
     myOrderList,
     getMyOrderList,
-    getOrderInfo
+    getOrderInfo,
+    healthManagement
 }

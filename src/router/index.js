@@ -16,6 +16,8 @@ const addPerson1 = () => import('../views/addPerson1')
 const personList = () => import('../views/addPersonList')
 const payConfirm = () => import('../views/payConfirm')
 const report = () => import('../views/report/index')
+const healthManagement = () => import('../views/healthManagement')
+
 
 const routes = [
   {
@@ -126,6 +128,14 @@ const routes = [
     path: '/report',
     name: 'report',
     component: report,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/healthManagement',
+    name: 'healthManagement',
+    component: healthManagement,
     meta: {
       requiresAuth: true
     }
